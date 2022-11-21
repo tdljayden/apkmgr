@@ -55,7 +55,9 @@ void syncapk(char * apkname) {
 		curl_easy_cleanup(curl);
 		fclose(fp);
 	}
-	system("xdg-open %s_%s.apk", apkname, apkversion);
+        char apkinstallcmd[100];
+        sprintf("xdg-open %s_%s.apk", apkname, apkversion);
+	system(apkinstallcmd);
 	/* sprintf(apkvercmd, "GET https://f-droid.org/api/v1/packages/%s HTTP/1.1 | grep -oP '(?<=suggestedVersionCode\":).*(?=,\"packages)'", apkname); */
 	/* char synccmd[100];
 	sprintf(synccmd, "wget https://f-droid.org/repo/%s_%s.apk", apkname, apkversion);
