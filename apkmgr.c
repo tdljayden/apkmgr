@@ -56,7 +56,7 @@ void syncapk(char * apkname) {
 		fclose(fp);
 	}
         char apkinstallcmd[100];
-        sprintf("xdg-open %s_%s.apk", apkname, apkversion);
+        sprintf(apkinstallcmd, "xdg-open %s_%s.apk", apkname, apkversion);
 	system(apkinstallcmd);
 	/* sprintf(apkvercmd, "GET https://f-droid.org/api/v1/packages/%s HTTP/1.1 | grep -oP '(?<=suggestedVersionCode\":).*(?=,\"packages)'", apkname); */
 	/* char synccmd[100];
