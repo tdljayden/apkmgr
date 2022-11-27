@@ -1,4 +1,5 @@
-LIBS=-lcurl
+LIBS = -lcurl -lpcre2-8
+CFLAGS = -Wall
 
 apkmgr: apkmgr.c
-	cc ${LIBS} apkmgr.c -o apkmgr
+	cc ${CFLAGS} ${LIBS} apkmgr.c -o apkmgr
