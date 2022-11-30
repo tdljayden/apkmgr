@@ -7,8 +7,7 @@ Current requirements are:
 
 Current build requirements are:
 *libcurl
-*gcc
+*cjson
 
 To do:
 *Add a function for searching
-*Add a way to grab the latest version of the software using a POSIX regex
