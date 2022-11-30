@@ -1,4 +1,4 @@
-LIBS = -lcurl
+LIBS = -lcurl -lcjson
 CFLAGS = -Wall
 
 apkmgr: apkmgr.c
