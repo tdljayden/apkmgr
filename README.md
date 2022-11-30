@@ -14,3 +14,4 @@ To do:
 * Put all apkmgr functions into a header file
 * Use snprintf() instead of sprintf() as it is safer
 * Fix arbitrary buffer size
+* Add help screen along with help function
