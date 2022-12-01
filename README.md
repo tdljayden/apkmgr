@@ -11,7 +11,6 @@ Current build requirements are:
 
 To do:
 * Add a function for searching
-* Put all apkmgr functions into a header file
 * Use snprintf() instead of sprintf() as it is safer
 * Fix arbitrary buffer size
 * Add help screen along with help function
