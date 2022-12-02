@@ -1,7 +1,7 @@
 # apkmgr
 apkmgr (abbreviation of APK Manager) plans to be a fully featured cli package manager for Android apps, based on the F-Droid repositories.
 
-apkmgr consists of two parts: a cli program written in C and an android app written in Java. The cli program is accessed through the termux terminal emulator in order to download APKs and open them in the the android app.
+apkmgr consists of two parts: a cli program written in C and an android app written in Java. The cli program is accessed through the termux terminal emulator in order to download APKs and open them in the the android app to install them.
 
 NOTE: apkmgr is currently alpha-quality software and is unreliable, doesn't work, with a lot of features missing.
 
