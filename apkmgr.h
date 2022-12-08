@@ -78,8 +78,12 @@ int grabapkver(char * apkname) {
 	curl_handle = curl_easy_init();
 
 	char url[100];
-	sprintf(url, "https://f-droid.org/api/v1/packages/%s", apkname);
-
+	int urllen;
+	
+	urllen = snprintf(url, 100, "https://f-droid.org/api/v1/packages/%s", apkname);
+	if (urllen >= 0 && urllen < 100) {
+		snprintf(url, (urllen + 1), "https://f-droid.org/api/v1/packages/%s", apkname);
+	}
 	curl_easy_setopt(curl_handle, CURLOPT_URL, url);
 	curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 	curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
