@@ -15,7 +15,5 @@ Current build requirements are:
 
 To do:
 * Add a function for searching
-* Use snprintf() instead of sprintf() as it is safer
-* Fix arbitrary buffer size
 * Add help screen along with help function
-* Remove requirement of third-party program in order to open APKs (explained in description).
+* Remove requirement of third-party program in order to open APKs (explained in description). (WIP) 
