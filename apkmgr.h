@@ -37,8 +37,15 @@ void syncapk(char * apkname) {
 	CURL *curl;
 	FILE *fp;
 	CURLcode res;
+
 	char urlstrng[100];
-	sprintf(urlstrng, "https://f-droid.org/repo/%s_%d.apk", apkname, apkver);
+	int urlstrnglen;
+
+	urlstrnglen = snprintf(urlstrng, 100,  "https://f-droid.org/repo/%s_%d.apk", apkname, apkver);
+	if (urlstrnglen >= 0 && urlstrnglen < 100) {
+		snprintf(urlstrng, (urlstrnglen + 1), "https://f-droid.org/repo/%s_%d.apk", apkname, apkver);
+	}
+
 	char *url = urlstrng;
 	char outfilename[FILENAME_MAX];
 	sprintf(outfilename, "%s_%d.apk", apkname, apkver);
@@ -60,7 +67,13 @@ void syncapk(char * apkname) {
 		}
 		else {
 			char apkinstallcmd[100];
-			sprintf(apkinstallcmd, "xdg-open %s_%d.apk", apkname, apkver);
+			int apkinstallcmdlen;
+
+			apkinstallcmdlen = snprintf(apkinstallcmd, 100, "xdg-open %s_%d.apk", apkname, apkver);
+			if (apkinstallcmdlen >= 0 && apkinstallcmdlen < 100) {
+				snprintf(apkinstallcmd, (apkinstallcmdlen + 1), "xdg-open %s_%d.apk", apkname, apkver);
+			}
+
 			system(apkinstallcmd);
 		}
 	}
@@ -77,11 +90,11 @@ int grabapkver(char * apkname) {
 	curl_global_init(CURL_GLOBAL_ALL);
 	curl_handle = curl_easy_init();
 
-	char url[100];
+	char url[48];
 	int urllen;
 	
-	urllen = snprintf(url, 100, "https://f-droid.org/api/v1/packages/%s", apkname);
-	if (urllen >= 0 && urllen < 100) {
+	urllen = snprintf(url, 48, "https://f-droid.org/api/v1/packages/%s", apkname);
+	if (urllen >= 0 && urllen < 48) {
 		snprintf(url, (urllen + 1), "https://f-droid.org/api/v1/packages/%s", apkname);
 	}
 	curl_easy_setopt(curl_handle, CURLOPT_URL, url);
