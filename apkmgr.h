@@ -74,12 +74,12 @@ void syncapk(char * apkname) {
 			curl_easy_strerror(res));
 		}
 		else {
-			char apkinstallcmd[100];
+			char apkinstallcmd[(FILENAME_MAX + 10)];
 			int apkinstallcmdlen;
 
-			apkinstallcmdlen = snprintf(apkinstallcmd, 100, "xdg-open %s_%d.apk", apkname, apkver);
-			if (apkinstallcmdlen >= 0 && apkinstallcmdlen < 100) {
-				snprintf(apkinstallcmd, (apkinstallcmdlen + 1), "xdg-open %s_%d.apk", apkname, apkver);
+			apkinstallcmdlen = snprintf(apkinstallcmd, (FILENAME_MAX + 10), "xdg-open %s", outfilename);
+			if (apkinstallcmdlen >= 0 && apkinstallcmdlen < (FILENAME_MAX + 10)) {
+				snprintf(apkinstallcmd, (apkinstallcmdlen + 1), "xdg-open %s", outfilename);
 			}
 
 			system(apkinstallcmd);
