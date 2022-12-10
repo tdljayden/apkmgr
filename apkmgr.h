@@ -48,7 +48,15 @@ void syncapk(char * apkname) {
 
 	char *url = urlstrng;
 	char outfilename[FILENAME_MAX];
-	sprintf(outfilename, "%s_%d.apk", apkname, apkver);
+	char *home = getenv("HOME");
+	int outfilenamelen;
+
+	printf("%s\n", home);
+
+	outfilenamelen = snprintf(outfilename, 100, "%s/.cache/apkmgr/%s_%d.apk", home, apkname, apkver);
+	if (outfilenamelen >= 0 && outfilenamelen < 100) {
+		snprintf(outfilename, (outfilenamelen + 1), "%s/.cache/apkmgr/%s_%d.apk", home, apkname, apkver);
+	}
 	curl = curl_easy_init();
 	if (apkver == 0) {
 		printf("Error: could not find app version!\n");
