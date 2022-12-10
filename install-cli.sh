@@ -1,2 +1,2 @@
 mkdir $HOME/.cache/apkmgr
-mv apkmgr /usr/bin/apkmgr
+mv apkmgr /data/data/com.termux/files/usr/bin/apkmgr
