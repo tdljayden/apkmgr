@@ -19,7 +19,7 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
 
 	char *ptr = realloc(mem->memory, mem->size + realsize + 1);
 	if(!ptr) {
-		printf("not enough memory (realloc returned NULL)\n");
+		printf("Error: Out of memory!\n");
 		return 0;
 	}
 
@@ -91,15 +91,15 @@ void syncapk(char * apkname) {
 									printf("\nInstalling package!\n");
 									system(apkinstallcmd);
 								} else {
-									printf("Error: Buffer overflow detected!");
+									printf("Error: Buffer overflow detected!\n");
 								}
 							}
 						}
 					} else {
-						printf("Error: Buffer overflow detected!");
+						printf("Error: Buffer overflow detected!\n");
 					}
 				} else {
-					printf("Error: Buffer overflow detected!");
+					printf("Error: Buffer overflow detected!\n");
 				}
 			} else if (strcmp(inputyn, "n") == 0 || strcmp(inputyn, "N") == 0) {
 				printf("\nAborting install!\n");
@@ -110,7 +110,7 @@ void syncapk(char * apkname) {
 			printf("\nError: Invalid Response. Please type y or n.\n");
 		}
 	} else {
-		printf("Error: Buffer overflow detected!");
+		printf("Error: Buffer overflow detected!\n");
 	}
 }
 
@@ -139,12 +139,12 @@ int grabapkver(char * apkname) {
 		res = curl_easy_perform(curl_handle);
 
 		if(res != CURLE_OK) {
-			fprintf(stderr, "curl_easy_perform() failed: %s\n",
+			fprintf(stderr, "Failed to retrieve package: %s\n",
 			curl_easy_strerror(res));
 			return 0;
 		}
 		else {
-			printf("%lu bytes retrieved\n", (unsigned long)chunk.size);
+			printf("Package version retrieved! (%lu bytes)\n", (unsigned long)chunk.size);
 
 			/* Parse JSON to grab the what the latest version is from the fdroid API */
 			const cJSON *apkverjson = NULL;
@@ -161,7 +161,7 @@ int grabapkver(char * apkname) {
 		free(chunk.memory);
 		curl_global_cleanup();
 	} else {
-		printf("Error: Buffer overflow detected!");
+		printf("Error: Buffer overflow detected!\n");
 		return 0;
 	}
 }
