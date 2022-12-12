@@ -11,9 +11,7 @@ struct MemoryStruct {
 	size_t size;
 };
 
-static size_t
-WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
-{
+static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
 	size_t realsize = size * nmemb;
 	struct MemoryStruct *mem = (struct MemoryStruct *)userp;
 
@@ -109,6 +107,8 @@ void syncapk(char * apkname) {
 		} else {
 			printf("\nError: Invalid Response. Please type y or n.\n");
 		}
+	} else if (apkver == 0) {
+		printf("Error: Package not found.");
 	} else {
 		printf("Error: Buffer overflow detected!\n");
 	}
