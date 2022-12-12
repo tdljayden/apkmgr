@@ -14,7 +14,6 @@ Current build requirements are:
 * [cjson](https://github.com/DaveGamble/cJSON)
 
 To do:
-* Replace scanf() with fgets() (or maybe getline())
 * Add a function for searching
 * Add a way to sync certain versions (-ver)
 * Add syncing in batch
