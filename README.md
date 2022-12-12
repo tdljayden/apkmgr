@@ -15,5 +15,8 @@ Current build requirements are:
 
 To do:
 * Add a function for searching
+* Add a way to sync certain versions (-ver)
+* Add syncing in batch
+* Add shortened forms of functions (e.g. -S for sync)
 * Add help screen along with help function
 * Remove requirement of third-party program in order to open APKs (explained in description). (WIP) 
