@@ -38,79 +38,81 @@ void syncapk(char * apkname) {
 	int promptlen;
 
 	promptlen = snprintf(prompt, 500, "\nPackage Name - %s\n\nPackage Version - %d\n\nAre you sure you want to install? [Y/n]\n", apkname, apkver);
-	if (promptlen >= 0 && promptlen < 500) {
-		snprintf(prompt, (promptlen + 1), "\nPackage Name - %s\n\nPackage Version - %d\n\nAre you sure you want to install? [Y/n]\n", apkname, apkver);
-		printf("%s\n", prompt);
-		scanf("%s", inputyn);
-		if (strlen(inputyn) == 1) {
-			if (strcmp(inputyn, "y") == 0 || strcmp(inputyn, "Y") == 0 || strcmp(inputyn, " ") == 0) {
-				printf("\nDownloading package!\n");
-				CURL *curl;
-				FILE *fp;
-				CURLcode res;
+	if (apkver != 0) {
+		if (promptlen >= 0 && promptlen < 500) {
+			snprintf(prompt, (promptlen + 1), "\nPackage Name - %s\n\nPackage Version - %d\n\nAre you sure you want to install? [Y/n]\n", apkname, apkver);
+			printf("%s\n", prompt);
+			scanf("%s", inputyn);
+			if (strlen(inputyn) == 1) {
+				if (strcmp(inputyn, "y") == 0 || strcmp(inputyn, "Y") == 0 || strcmp(inputyn, " ") == 0) {
+					printf("\nDownloading package!\n");
+					CURL *curl;
+					FILE *fp;
+					CURLcode res;
 
-				char urlstrng[100];
-				int urlstrnglen;
+					char urlstrng[100];
+					int urlstrnglen;
 
-				urlstrnglen = snprintf(urlstrng, 100,  "https://f-droid.org/repo/%s_%d.apk", apkname, apkver);
-				if (urlstrnglen >= 0 && urlstrnglen < 100) {
-					snprintf(urlstrng, (urlstrnglen + 1), "https://f-droid.org/repo/%s_%d.apk", apkname, apkver);
+					urlstrnglen = snprintf(urlstrng, 100,  "https://f-droid.org/repo/%s_%d.apk", apkname, apkver);
+					if (urlstrnglen >= 0 && urlstrnglen < 100) {
+						snprintf(urlstrng, (urlstrnglen + 1), "https://f-droid.org/repo/%s_%d.apk", apkname, apkver);
 
-					char *url = urlstrng;
-					char outfilename[FILENAME_MAX];
-					char *home = getenv("HOME");
-					int outfilenamelen;
+						char *url = urlstrng;
+						char outfilename[FILENAME_MAX];
+						char *home = getenv("HOME");
+						int outfilenamelen;
 
-					outfilenamelen = snprintf(outfilename, 100, "%s/.cache/apkmgr/%s_%d.apk", home, apkname, apkver);
-					if (outfilenamelen >= 0 && outfilenamelen < 100) {
-						curl = curl_easy_init();
-						snprintf(outfilename, (outfilenamelen + 1), "%s/.cache/apkmgr/%s_%d.apk", home, apkname, apkver);
-						if (apkver == 0) {
-							printf("\nError: could not find app version!\n");
-						} else if (curl) {
-							fp = fopen(outfilename,"wb");
-							curl_easy_setopt(curl, CURLOPT_URL, url);
-							curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
-							curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
-							res = curl_easy_perform(curl);
-							curl_easy_cleanup(curl);
-							fclose(fp);
-							if(res != CURLE_OK) {
-								fprintf(stderr, "\ncurl_easy_perform() failed: %s\n",
-								curl_easy_strerror(res));
-							} else {
-								char apkinstallcmd[(FILENAME_MAX + 10)];
-								int apkinstallcmdlen;
-
-								apkinstallcmdlen = snprintf(apkinstallcmd, (FILENAME_MAX + 10), "xdg-open %s", outfilename);
-								if (apkinstallcmdlen >= 0 && apkinstallcmdlen < (FILENAME_MAX + 10)) {
-									snprintf(apkinstallcmd, (apkinstallcmdlen + 1), "xdg-open %s", outfilename);
-
-									printf("\nInstalling package!\n");
-									system(apkinstallcmd);
+						outfilenamelen = snprintf(outfilename, 100, "%s/.cache/apkmgr/%s_%d.apk", home, apkname, apkver);
+						if (outfilenamelen >= 0 && outfilenamelen < 100) {
+							curl = curl_easy_init();
+							snprintf(outfilename, (outfilenamelen + 1), "%s/.cache/apkmgr/%s_%d.apk", home, apkname, apkver);
+							if (apkver == 0) {
+								printf("\nError: could not find app version!\n");
+							} else if (curl) {
+								fp = fopen(outfilename,"wb");
+								curl_easy_setopt(curl, CURLOPT_URL, url);
+								curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+								curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+								res = curl_easy_perform(curl);
+								curl_easy_cleanup(curl);
+								fclose(fp);
+								if(res != CURLE_OK) {
+									fprintf(stderr, "\ncurl_easy_perform() failed: %s\n",
+									curl_easy_strerror(res));
 								} else {
-									printf("Error: Buffer overflow detected!\n");
+									char apkinstallcmd[(FILENAME_MAX + 10)];
+									int apkinstallcmdlen;
+
+									apkinstallcmdlen = snprintf(apkinstallcmd, (FILENAME_MAX + 10), "xdg-open %s", outfilename);
+									if (apkinstallcmdlen >= 0 && apkinstallcmdlen < (FILENAME_MAX + 10)) {
+										snprintf(apkinstallcmd, (apkinstallcmdlen + 1), "xdg-open %s", outfilename);
+
+										printf("\nInstalling package!\n");
+										system(apkinstallcmd);
+									} else {
+										printf("Error: Buffer overflow detected!\n");
+									}
 								}
 							}
+						} else {
+							printf("Error: Buffer overflow detected!\n");
 						}
 					} else {
 						printf("Error: Buffer overflow detected!\n");
 					}
+				} else if (strcmp(inputyn, "n") == 0 || strcmp(inputyn, "N") == 0) {
+					printf("\nAborting install!\n");
 				} else {
-					printf("Error: Buffer overflow detected!\n");
+					printf("\nError: Invalid Response. Please type y or n.\n");
 				}
-			} else if (strcmp(inputyn, "n") == 0 || strcmp(inputyn, "N") == 0) {
-				printf("\nAborting install!\n");
 			} else {
 				printf("\nError: Invalid Response. Please type y or n.\n");
 			}
 		} else {
-			printf("\nError: Invalid Response. Please type y or n.\n");
+			printf("Error: Buffer overflow detected!\n");
 		}
-	} else if (apkver == 0) {
-		printf("Error: Package not found.");
 	} else {
-		printf("Error: Buffer overflow detected!\n");
+		printf("Error: Package not found.\n");
 	}
 }
 
