@@ -42,7 +42,7 @@ void syncapk(char * apkname) {
 		if (promptlen >= 0 && promptlen < 500) {
 			snprintf(prompt, (promptlen + 1), "\nPackage Name - %s\n\nPackage Version - %d\n\nAre you sure you want to install? [Y/n]\n", apkname, apkver);
 			printf("%s\n", prompt);
-			scanf("%s", inputyn);
+			scanf("%c", inputyn);
 			if (strlen(inputyn) == 1) {
 				if (strcmp(inputyn, "y") == 0 || strcmp(inputyn, "Y") == 0 || strcmp(inputyn, " ") == 0) {
 					printf("\nDownloading package!\n");
