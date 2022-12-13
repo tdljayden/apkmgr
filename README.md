@@ -14,9 +14,12 @@ Current build requirements are:
 * [cjson](https://github.com/DaveGamble/cJSON)
 
 To do:
-* Add a function for searching
+* Add help screen along with help function
 * Add a way to sync certain versions (-ver)
 * Add syncing in batch
 * Add shortened forms of functions (e.g. -S for sync)
-* Add help screen along with help function
+* Add index for grabbing information about packages
+* Add a function for syncing index
+* Add a function for querying packages
+* Add a function for searching
 * Remove requirement of third-party program in order to open APKs (explained in description). (WIP) 
