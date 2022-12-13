@@ -32,7 +32,7 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
 void syncapk(char * apkname, int apkver) {
 	printf("Syncing package: %s!\n", apkname);
 
-	char inputyn[1];
+	static char inputyn[1];
 	char prompt[500];
 	int promptlen;
 
@@ -95,11 +95,11 @@ void syncapk(char * apkname, int apkver) {
 					} else {
 						printf("Error: Buffer overflow detected!\n");
 					}
-				} else if (strcmp(inputyn, "n") == 0 || strcmp(inputyn, "N") == 0) {
-					printf("\nAborting install!\n");
 				} else {
-					printf("\nError: Invalid Response. Please type y or n.\n");
+					printf("Error: Buffer overflow detected!\n");
 				}
+			} else if (strcmp(inputyn, "n") == 0 || strcmp(inputyn, "N") == 0) {
+				printf("\nAborting install!\n");
 			} else {
 				printf("\nError: Invalid Response. Please type y or n.\n");
 			}
