@@ -9,10 +9,12 @@
 
 #include "apkmgr.h"
 
-int main(int argc, char **argv)
-{
+void helpscreen(int apkmgrver);
+
+int main(int argc, char **argv) {
+	int apkmgrver = 0;
 	if(argc==1) {
-		printf("Displaying help screen.\n");
+		helpscreen(apkmgrver);
 	} else if(argc>=2) {
 		if(strncmp(argv[1], "sync\n", 4) == 0) {
 			if(argc==3) {
@@ -27,4 +29,8 @@ int main(int argc, char **argv)
 		}
 	}
 	return 0;
+}
+
+void helpscreen(int apkmgrver) {
+	printf("\napkmgr version %d\n\nusage: apkmgr <operation> [...]\noperations:\n	apkmgr {-h --help}\n	apkmgr {-V --version}\n	apkmgr {-I --syncindex}\n	apkmgr {-Q --query}        [packages(s)]\n	apkmgr {-R --remove}       [options] <packages(s)>\n	apkmgr {-S --sync}         [options] [package(s)]\n	apkmgr {-ver --apkversion} [packageversion]\n	apkmgr {-U --upgrade}\n\n", apkmgrver);
 }
