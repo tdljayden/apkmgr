@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
 	} else if(argc>=2) {
 		if(strncmp(argv[1], "sync\n", 4) == 0) {
 			if(argc==3) {
-				syncapk(argv[2]);
+				syncapk(argv[2], grabapkver(argv[2]));
 			} else {
 				printf("No package specified!\n");
 			}
