@@ -1,4 +1,4 @@
-void syncapk(char * apkname, int apkver);
+void syncapk(char * apkname, int apkver, bool apkbatch);
 int grabapkver(char * apkname);
 
 size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
@@ -29,7 +29,7 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
 	return realsize;
 }
 
-void syncapk(char * apkname, int apkver) {
+void syncapk(char * apkname, int apkver, bool apkbatch) {
 	printf("Syncing package: %s!\n", apkname);
 
 	static char inputyn[1];

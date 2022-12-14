@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 #include <curl/curl.h>
@@ -40,11 +41,24 @@ int main(int argc, char **argv) {
 	if (argc >= 2) {
 		if (strncmp(argv[1], "sync", 4) == 0) {
 			if (argc >= 3) {
-				int apkcount = (argc-2);
-				while (apkcount != 0) {
-					int apknamelocation = (argc - apkcount); 
-					syncapk(argv[apknamelocation], grabapkver(argv[apknamelocation]));
-					apkcount--;
+				if (argc == 3) {
+					printf("Installing latest version of package!\n");	
+					syncapk(argv[2], grabapkver(argv[2]), false);
+				} else if (strncmp(argv[3], "-ver", 4) == 0) {
+					if (argc == 4) {
+						printf("No package version specified!\n");
+					} else if (argc == 5) {
+						printf("Installing package with specified version!\n");
+					} else {
+						printf("Too many arguments to install!");
+					}
+				} else {
+					int apkcount = (argc-2);
+					while (apkcount != 0) {
+						int apknamelocation = (argc - apkcount); 
+						syncapk(argv[apknamelocation], grabapkver(argv[apknamelocation]), true);
+						apkcount--;
+					}
 				}
 			} else {
 				printf("No package specified!\n");
