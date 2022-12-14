@@ -40,10 +40,11 @@ int main(int argc, char **argv) {
 	if (argc >= 2) {
 		if (strncmp(argv[1], "sync", 4) == 0) {
 			if (argc >= 3) {
-				int apkcount = 0;
-				while (apkcount < (argc-2)) {
-					syncapk(argv[(argc-1-apkcount)], grabapkver(argv[(argc-1)]));
-					apkcount++;
+				int apkcount = (argc-2);
+				while (apkcount != 0) {
+					int apknamelocation = (argc - apkcount); 
+					syncapk(argv[apknamelocation], grabapkver(argv[apknamelocation]));
+					apkcount--;
 				}
 			} else {
 				printf("No package specified!\n");
