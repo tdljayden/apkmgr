@@ -43,20 +43,36 @@ int main(int argc, char **argv) {
 			if (argc >= 3) {
 				if (argc == 3) {
 					printf("Installing latest version of package!\n");	
-					syncapk(argv[2], grabapkver(argv[2]), false);
+					int apkverint = grabapkver(argv[2]);
+					if (apkverint > 0) {
+						syncapk(argv[2], apkverint, false);
+					} else {
+						printf("Package version not found!\n");
+					}
 				} else if (strncmp(argv[3], "-ver", 4) == 0) {
 					if (argc == 4) {
 						printf("No package version specified!\n");
 					} else if (argc == 5) {
-						printf("Installing package with specified version!\n");
+						int apkverint = atoi(argv[4]);
+						if (apkverint > 0) {
+							printf("Installing package with specified version %d!\n", apkverint);
+							syncapk(argv[2], apkverint, false);
+						} else {
+							printf("Package version not found!\n");
+						}
 					} else {
-						printf("Too many arguments to install!");
+						printf("Too many arguments to install!\n");
 					}
 				} else {
 					int apkcount = (argc-2);
 					while (apkcount != 0) {
 						int apknamelocation = (argc - apkcount); 
-						syncapk(argv[apknamelocation], grabapkver(argv[apknamelocation]), true);
+						int apkverint = grabapkver(argv[apknamelocation]);
+						if (apkverint > 0) {
+							syncapk(argv[apknamelocation], apkverint, true);
+						} else {
+							printf("Package version not found!\n");
+						}
 						apkcount--;
 					}
 				}
