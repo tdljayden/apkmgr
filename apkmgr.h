@@ -1,4 +1,4 @@
-void syncapk(char * apkname, int apkver, bool apkbatch);
+char * syncapk(char * apkname, int apkver, bool apkbatch);
 int grabapkver(char * apkname);
 
 size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
@@ -10,6 +10,10 @@ struct MemoryStruct {
 	char *memory;
 	size_t size;
 };
+
+typedef struct {
+	char * location;
+} filelocation;
 
 static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
 	size_t realsize = size * nmemb;
@@ -29,7 +33,7 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
 	return realsize;
 }
 
-void syncapk(char * apkname, int apkver, bool apkbatch) {
+char * syncapk(char * apkname, int apkver, bool apkbatch) {
 	printf("Syncing package: %s!\n", apkname);
 
 	static char inputyn[1];
@@ -111,7 +115,7 @@ void syncapk(char * apkname, int apkver, bool apkbatch) {
 			printf("Error: Package not found.\n");
 		}
 	} else if (apkbatch == true) {
-		printf("\nDownloading package!\n");
+		printf("\nDownloading package!");
 		CURL *curl;
 		FILE *fp;
 		CURLcode res;
@@ -124,7 +128,7 @@ void syncapk(char * apkname, int apkver, bool apkbatch) {
 			snprintf(urlstrng, (urlstrnglen + 1), "https://f-droid.org/repo/%s_%d.apk", apkname, apkver);
 
 			char *url = urlstrng;
-			char outfilename[FILENAME_MAX];
+			static char outfilename[FILENAME_MAX];
 			char *home = getenv("HOME");
 			int outfilenamelen;
 
@@ -143,21 +147,12 @@ void syncapk(char * apkname, int apkver, bool apkbatch) {
 					curl_easy_cleanup(curl);
 					fclose(fp);
 					if(res != CURLE_OK) {
-						fprintf(stderr, "\ncurl_easy_perform() failed: %s\n",
+						fprintf(stderr, "curl_easy_perform() failed: %s\n",
 						curl_easy_strerror(res));
 					} else {
-						char apkinstallcmd[(FILENAME_MAX + 10)];
-						int apkinstallcmdlen;
-
-						apkinstallcmdlen = snprintf(apkinstallcmd, (FILENAME_MAX + 10), "xdg-open %s", outfilename);
-						if (apkinstallcmdlen >= 0 && apkinstallcmdlen < (FILENAME_MAX + 10)) {
-							snprintf(apkinstallcmd, (apkinstallcmdlen + 1), "xdg-open %s", outfilename);
-
-							printf("\nInstalling package!\n");
-							system(apkinstallcmd);
-						} else {
-							printf("Error: Buffer overflow detected!\n");
-						}
+						filelocation * apkfilelocation = (filelocation *) malloc(sizeof(filelocation));
+						apkfilelocation->location = outfilename;
+						return apkfilelocation->location;
 					}
 				}
 			} else {
@@ -167,6 +162,7 @@ void syncapk(char * apkname, int apkver, bool apkbatch) {
 			printf("Error: Buffer overflow detected!\n");
 		}
 	}
+	return 0;
 }
 
 int grabapkver(char * apkname) {

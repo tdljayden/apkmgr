@@ -64,16 +64,47 @@ int main(int argc, char **argv) {
 						printf("Too many arguments to install!\n");
 					}
 				} else {
+					static char input[1] = "\0";
 					int apkcount = (argc-2);
+					static char **array = NULL;
 					while (apkcount != 0) {
 						int apknamelocation = (argc - apkcount); 
 						int apkverint = grabapkver(argv[apknamelocation]);
 						if (apkverint > 0) {
-							syncapk(argv[apknamelocation], apkverint, true);
+							static char apkfilelocation[1000];
+							array = (char**)realloc(array, (apkcount+1)*sizeof(*array));
+							array[apkcount-1] = (char*)malloc(sizeof(apkfilelocation));
+							strcpy(array[apkcount-1], syncapk(argv[apknamelocation], apkverint, true));
+							apkcount--;
+							if (apkcount == 0) {
+								printf("Downloading finished!\n");
+								int installsleft = (argc-2);
+								while (installsleft != 0) {
+									static char installcmd[10000];
+									int installcmdlen = snprintf(installcmd, 10000,  "xdg-open %s", array[installsleft-1]);
+									if (installcmdlen >= 0 && installcmdlen < 10000) {
+										snprintf(installcmd, (installcmdlen + 1), "xdg-open %s", array[installsleft-1]);
+										printf("Package downloaded at '%s'! Press [ENTER] to install.", array[installsleft-1]);
+										scanf("%c", input);
+										if (strcmp(input, "\n") == 0) {
+											printf("Installing package!\n");
+											system(installcmd);
+										} else {
+											printf("Wrong input! Not installing...\n");
+										}
+									} else {
+										printf("Buffer overflow detected!\n");
+									}
+									installsleft--;
+									if (installsleft == 0) {
+										printf("%d packages installed!\n", (argc-2));
+									}
+								}
+							}
 						} else {
 							printf("Package version not found!\n");
+							apkcount--;
 						}
-						apkcount--;
 					}
 				}
 			} else {
