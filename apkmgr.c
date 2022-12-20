@@ -65,6 +65,7 @@ int main(int argc, char **argv) {
 					}
 				} else {
 					static char input[1] = "\0";
+					int apknumber = 0;
 					int apkcount = (argc-2);
 					static char **array = NULL;
 					while (apkcount != 0) {
@@ -72,9 +73,10 @@ int main(int argc, char **argv) {
 						int apkverint = grabapkver(argv[apknamelocation]);
 						if (apkverint > 0) {
 							static char apkfilelocation[1000];
-							array = (char**)realloc(array, (apkcount+1)*sizeof(*array));
-							array[apkcount-1] = (char*)malloc(sizeof(apkfilelocation));
-							strcpy(array[apkcount-1], syncapk(argv[apknamelocation], apkverint, true));
+							array = (char**)realloc(array, (apknumber+1)*sizeof(*array));
+							array[apknumber] = (char*)malloc(sizeof(apkfilelocation));
+							strcpy(array[apknumber], syncapk(argv[apknamelocation], apkverint, true));
+							apknumber++;
 							apkcount--;
 							if (apkcount == 0) {
 								printf("Downloading finished!\n");
