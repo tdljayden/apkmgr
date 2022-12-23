@@ -14,9 +14,8 @@ Current build requirements are:
 * [cjson](https://github.com/DaveGamble/cJSON)
 
 To do:
-* Add a way to sync certain versions (-ver)
-* Add syncing in batch
 * Add index for grabbing information about packages
+* Add index for checking the presence of existing packages
 * Add a function for syncing index
 * Add a function for querying packages
 * Add a function for searching
