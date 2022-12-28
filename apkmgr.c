@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
 	// this is previous version code above
 	int apkmgrver = 0;
 	if (argc >= 2) {
-		if (strncmp(argv[1], "sync", 4) == 0) {
+		if (strncmp(argv[1], "sync", 4) == 0 || strncmp(argv[1], "-S", 4) == 0) {
 			if (argc >= 3) {
 				if (argc == 3) {
 					printf("Installing latest version of package!\n");	
@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
 					} else {
 						printf("Package version not found!\n");
 					}
-				} else if (strncmp(argv[3], "-ver", 4) == 0) {
+				} else if (strncmp(argv[3], "-ver", 4) == 0 || strncmp(argv[3], "--apkversion", 4) == 0) {
 					if (argc == 4) {
 						printf("No package version specified!\n");
 					} else if (argc == 5) {
@@ -114,10 +114,16 @@ int main(int argc, char **argv) {
 			} else {
 				printf("No package specified!\n");
 			}
-		} else if (strncmp(argv[1], "--syncindex", 4) == 0) {
+		} else if (strcmp(argv[1], "--syncindex") == 0 || strcmp(argv[1], "-I") == 0 ) {
 			if (argc == 2) {
 				printf("Syncing index!\n");
 				syncindex();
+			} else {
+				printf("Too many arguments!\n");
+			}
+		} else if (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0 ) {
+			if (argc == 2) {
+				helpscreen(apkmgrver);
 			} else {
 				printf("Too many arguments!\n");
 			}
