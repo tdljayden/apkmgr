@@ -16,8 +16,6 @@ Current build requirements are:
 To do:
 * Add index for grabbing information about packages
 * Add index for checking the presence of existing packages
-* Add a function for syncing index
 * Add a function for querying packages
 * Add a function for searching
-* Add shortened forms of functions (e.g. -S for sync)
 * Remove requirement of third-party program in order to open APKs (explained in description). (WIP) 
