@@ -114,6 +114,13 @@ int main(int argc, char **argv) {
 			} else {
 				printf("No package specified!\n");
 			}
+		} else if (strncmp(argv[1], "--syncindex", 4) == 0) {
+			if (argc == 2) {
+				printf("Syncing index!\n");
+				syncindex();
+			} else {
+				printf("Too many arguments!\n");
+			}
 		} else {
 			printf("Command \"%s\" not found!\n", argv[1]);
 		}
