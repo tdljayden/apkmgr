@@ -9,6 +9,8 @@
 #include <cjson/cJSON.h>
 
 #include "apkmgr.h"
+#include "sync.h"
+#include "index.h"
 
 void helpscreen(int apkmgrver);
 
