@@ -30,4 +30,7 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
 	return realsize;
 }
 
-
+char *gethome() {
+	char *home = getenv("HOME");
+	return home;
+}
